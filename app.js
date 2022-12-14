@@ -1,12 +1,9 @@
 let titleModal = document.querySelector("#exampleModalLabel");
 let bodyModal = document.querySelector(".modal-body");
-let userModal = document.querySelector(".userModal");
-let emailModal = document.querySelector(".emailModal");
 let usersEmails = document.querySelector('#userEmail');
 
 const urlPosts = "http://localhost:3000/posts";
 const urlUsers = "http://localhost:3000/users";
-console.log(urlPosts)
 
 async function getData() {
   const response1 = await fetch(urlPosts);
@@ -16,7 +13,7 @@ async function getData() {
   const data2 = await response2.json();
 
     cardsPosts(data1);
-    prueba(data2);
+    modalPosts(data2);
 
 }
 getData();
@@ -39,37 +36,33 @@ function cardsPosts(titlesCards) {
 function modalPosts(userEmail) {
   let modals = "";
   userEmail.forEach((modale) => {
-    modals += `<p class="userModal" name="${modale.id}">${modale.username}</p>
-                <br>
-               <p class="emailModal" name="${modale.id}">${modale.email}</p>`;
+    modals += `<p class="userModal" name="${modale.userId}">${modale.username}</p>
+                
+               <p class="emailModal" name="${modale.userId}">${modale.email}</p>`;
               
     document.querySelector("#userEmail").innerHTML = modals;
+
   });
 }
 
- function prueba(e) {
-  let postId =  e.target.name;
-  let posts, users;
-  fetch(`${urlPosts}/${postId}`)
+function prueba(e) {
+  const element = e.target.name;
+
+  fetch(`${urlPosts}/${element}`)
     .then(function (response2) {
       return response2.json();
     })
     .then(function (data1) {
       titleModal.textContent = data1.title;
       bodyModal.textContent = data1.body;
-      posts = data1;
-      console.log(posts);
-      return fetch(`${urlUsers}/${postId}`);
+      
+      return fetch(`${urlUsers}/${data1.userId}`);
     })
     .then(function (response2) {
       return response2.json();
     })
-    .then(function (data2) {
-      users = data2;
-      usersEmails.textContent = data2.username + data2.email;
-      // usersEmails.textContent = data2.email ;
-      console.log(users);
-      
+    .then(function (data2) {            
+      usersEmails.textContent = " Username: " + data2.username +" Email: "+ data2.email;      
     })
     .catch(function (error) {
       console.log(error);
