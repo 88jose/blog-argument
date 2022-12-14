@@ -6,13 +6,6 @@ let emailModal = document.querySelector(".emailModal");
 const urlPosts = "http://localhost:3000/posts";
 const urlUsers = "http://localhost:3000/users";
 
-// fetch(urlPosts)
-//   .then((response) => response.json())
-//   .then((data) => {
-//     cardsPosts(data);
-//   });
-
-
 async function getData(){
     const response1 = await fetch(urlPosts)
     const data1 = await response1.json()
@@ -41,19 +34,6 @@ function cardsPosts(titlesCards) {
   });
 }
 
-
-
-
-// function prueba(e){
-//   fetch(`${urlPosts}/${e.target.name}`)
-//   .then((response) => response.json())
-//   .then((modal) => {
-//     titleModal.textContent = modal.title;
-//     bodyModal.textContent = modal.body;
-//     userModal.textContent = modal.username;
-//     emailModal.textContent = modal.email;
-//   });
-// }
 function prueba(e){
   var posts, users;
   fetch(`${urlPosts}/${e.target.name}`)
@@ -75,7 +55,6 @@ function prueba(e){
     console.log(users)
    
 }).catch(function (error) {
-
   console.log(error);
 });
 }
