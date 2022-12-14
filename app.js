@@ -1,6 +1,3 @@
-// const urlPosts = "http://localhost:3000/posts";
-// const urlUsers = "https://jsonplaceholder.typicode.com/users";
-
 let titleModal =document.querySelector("#exampleModalLabel");
 let bodyModal =document.querySelector(".modal-body");
 let userModal = document.querySelector(".userModal");
@@ -13,9 +10,9 @@ let emailModal = document.querySelector(".emailModal");
 //   });
 
 
+const urlPosts = "http://localhost:3000/posts";
+// const urlUsers = "https://jsonplaceholder.typicode.com/users";
 async function getData(){
-    const urlPosts = "http://localhost:3000/posts";
-    // const urlUsers = "https://jsonplaceholder.typicode.com/users";
     console.log(urlPosts)
 
     const response1 = await fetch(urlPosts)
@@ -52,9 +49,6 @@ function prueba(e){
   .then((response) => response.json())
   .then((modal) => {
     titleModal.textContent = modal.title;
-    bodyModal.textContent = modal.body;
-  
-
-    
+    bodyModal.textContent = modal.body; 
   });
 }
