@@ -1,21 +1,33 @@
-const urlPosts = "https://jsonplaceholder.typicode.com/posts";
-const urlUsers = "https://jsonplaceholder.typicode.com/users";
+// const urlPosts = "http://localhost:3000/posts";
+// const urlUsers = "https://jsonplaceholder.typicode.com/users";
 
 let titleModal =document.querySelector("#exampleModalLabel");
 let bodyModal =document.querySelector(".modal-body");
 let userModal = document.querySelector(".userModal");
 let emailModal = document.querySelector(".emailModal");
 
-fetch(urlPosts)
-  .then((response) => response.json())
-  .then((data) => {
-    cardsPosts(data);
-  });
-  // fetch(urlUsers)
-  // .then((response) => response.json())
-  // .then((data) => {
-  //   cardsPosts(data);
-  // });
+// fetch(urlPosts)
+//   .then((response) => response.json())
+//   .then((data) => {
+//     cardsPosts(data);
+//   });
+
+
+async function getData(){
+    const urlPosts = "http://localhost:3000/posts";
+    // const urlUsers = "https://jsonplaceholder.typicode.com/users";
+    console.log(urlPosts)
+
+    const response1 = await fetch(urlPosts)
+    const data1 = await response1.json()
+
+    // const response2 = await fetch(urlUsers)
+    // const data2 = await response1.json()
+
+    cardsPosts(data1);
+}
+getData();
+
 
 function cardsPosts(titlesCards) {
   let cards = "";
@@ -33,16 +45,16 @@ function cardsPosts(titlesCards) {
 }
 
 
+
+
 function prueba(e){
   fetch(`${urlPosts}/${e.target.name}`)
   .then((response) => response.json())
   .then((modal) => {
     titleModal.textContent = modal.title;
     bodyModal.textContent = modal.body;
-    userModal.textContent = modal.username;
-    userModal.textContent = modal.email;
-    console.log(userModal)
-
-  });
   
+
+    
+  });
 }
