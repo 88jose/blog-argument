@@ -4,7 +4,6 @@ fetch(urlPosts)
   .then((response) => response.json())
   .then((data) => {
     cardsPosts(data);
-    modalPosts(data);
   });
 
 function cardsPosts(titlesCards) {
@@ -14,7 +13,7 @@ function cardsPosts(titlesCards) {
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">${post.title}</h5>
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Launch demo modal</button>
+                            <button onclick="prueba(event)" type="button" class="btn btn-primary" data-bs-toggle="modal" name ="${post.id}" data-bs-target="#exampleModal">View post</button>
                         </div>
                     </div>
                 </div>`;
@@ -22,25 +21,14 @@ function cardsPosts(titlesCards) {
   });
 }
 
-function modalPosts(infoModal) {
-  let titleBodyModal = "";
-  infoModal.forEach((modal) => {
-    titleBodyModal += `<div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="exampleModalLabel">${modal.title}</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                ${modal.body}
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Save changes</button>
-                                </div>
-                            </div>
-                        </div> `;
-console.log(modal.title)
-    document.querySelector("#exampleModal").innerHTML = titleBodyModal;
+let titleModal =document.querySelector("#exampleModalLabel");
+let bodyModal =document.querySelector(".modal-body");
+function prueba(e){
+  fetch(`${urlPosts}/${e.target.name}`)
+  .then((response) => response.json())
+  .then((modal) => {
+    titleModal.textContent = modal.title;
+    bodyModal.textContent = modal.body;
   });
+  
 }
