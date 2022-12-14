@@ -1,10 +1,21 @@
 const urlPosts = "https://jsonplaceholder.typicode.com/posts";
+const urlUsers = "https://jsonplaceholder.typicode.com/users";
+
+let titleModal =document.querySelector("#exampleModalLabel");
+let bodyModal =document.querySelector(".modal-body");
+let userModal = document.querySelector(".userModal");
+let emailModal = document.querySelector(".emailModal");
 
 fetch(urlPosts)
   .then((response) => response.json())
   .then((data) => {
     cardsPosts(data);
   });
+  // fetch(urlUsers)
+  // .then((response) => response.json())
+  // .then((data) => {
+  //   cardsPosts(data);
+  // });
 
 function cardsPosts(titlesCards) {
   let cards = "";
@@ -21,14 +32,17 @@ function cardsPosts(titlesCards) {
   });
 }
 
-let titleModal =document.querySelector("#exampleModalLabel");
-let bodyModal =document.querySelector(".modal-body");
+
 function prueba(e){
   fetch(`${urlPosts}/${e.target.name}`)
   .then((response) => response.json())
   .then((modal) => {
     titleModal.textContent = modal.title;
     bodyModal.textContent = modal.body;
+    userModal.textContent = modal.username;
+    userModal.textContent = modal.email;
+    console.log(userModal)
+
   });
   
 }
