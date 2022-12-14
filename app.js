@@ -5,7 +5,8 @@ let emailModal = document.querySelector(".emailModal");
 let usersEmails = document.querySelector('#userEmail');
 
 const urlPosts = "http://localhost:3000/posts";
-const urlUsers = "http://localhost:3000/users/";
+const urlUsers = "http://localhost:3000/users";
+console.log(urlPosts)
 
 async function getData() {
   const response1 = await fetch(urlPosts);
@@ -15,7 +16,7 @@ async function getData() {
   const data2 = await response2.json();
 
     cardsPosts(data1);
-    modalPosts(data2);
+    prueba(data2);
 
 }
 getData();
@@ -34,12 +35,13 @@ function cardsPosts(titlesCards) {
     document.querySelector("#cards").innerHTML = cards;
   });
 }
+
 function modalPosts(userEmail) {
   let modals = "";
   userEmail.forEach((modale) => {
-    modals += `<p class="userModal" >${modale.username}</p>
+    modals += `<p class="userModal" name="${modale.id}">${modale.username}</p>
                 <br>
-               <p class="emailModal" name="${modale.email}">${modale.email}</p>`;
+               <p class="emailModal" name="${modale.id}">${modale.email}</p>`;
               
     document.querySelector("#userEmail").innerHTML = modals;
   });
@@ -49,15 +51,15 @@ function modalPosts(userEmail) {
   let postId =  e.target.name;
   let posts, users;
   fetch(`${urlPosts}/${postId}`)
-    .then(function (response1) {
-      return response1.json();
+    .then(function (response2) {
+      return response2.json();
     })
     .then(function (data1) {
       titleModal.textContent = data1.title;
       bodyModal.textContent = data1.body;
       posts = data1;
       console.log(posts);
-      return fetch(`${urlUsers}${postId}`);
+      return fetch(`${urlUsers}/${postId}`);
     })
     .then(function (response2) {
       return response2.json();
