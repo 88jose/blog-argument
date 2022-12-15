@@ -1,13 +1,14 @@
 // Variables
-let titleModal = document.querySelector("#exampleModalLabel");
-let bodyModal = document.querySelector(".modal-body");
+let titleModal = document.querySelector('#exampleModalLabel');
+let bodyModal = document.querySelector('.modal-body');
 let usersModal = document.querySelector('#userModal');
 let emailsModal = document.querySelector('#emailModal');
 let commentModal = document.querySelector('#commentModal');
 let btnComments = document.querySelector('#btnComments');
 let editButton = document.querySelector('#editButton');
-let btnDelete = document.querySelector("#btnDelete");
-let containerPost = document.querySelector("#containerPost");
+let btnDelete = document.querySelector('#btnDelete');
+let containerPost = document.querySelector('#containerPost');
+let cards = document.querySelector('#cards');
 
 // Variables URLs
 const urlPosts = "http://localhost:3000/posts";
@@ -17,6 +18,7 @@ const urlComments = "http://localhost:3000/comments";
 
 // Escuchador de eventos
 btnComments.addEventListener('click', showComments);
+btnDelete.addEventListener('click',  deletePost);
 
 
 // Funcion para hacer fetch a las urls de manera asincrona, es decir de manera simultanea, una vez obtenidos los datos se llama a las funciones
@@ -45,7 +47,7 @@ function cardsPosts(titlesCards) {
                         </div>
                     </div>
                 </div>`;
-    document.querySelector("#cards").innerHTML = cards;
+    document.querySelector('#cards').innerHTML = cards;
   });
 }
 
@@ -57,8 +59,8 @@ function modalPosts(userEmail) {
       modalsUser += `<p class="userModal" name="${modal.userId}">${modal.username}</p>`;
       modalsEmail +=`<p class="emailModal" name="${modal.userId}">${modal.email}</p>`;
               
-      document.querySelector("#userModal").innerHTML = modalsUser;
-      document.querySelector("#emailModal").innerHTML = modalsEmail;
+      document.querySelector('#userModal').innerHTML = modalsUser;
+      document.querySelector('#emailModal').innerHTML = modalsEmail;
   });
 }
 
@@ -89,7 +91,7 @@ function swohModal(e) {
     // para que cuando recargue esté vacío
     .then(function (data3) {
       // commentModal.textContent = ""; 
-      document.getElementById("flush-collapseOne").classList.remove("show");
+      document.getElementById('flush-collapseOne').classList.remove('show');
     })
     .catch(function (error) {
       console.log(error);
@@ -98,7 +100,7 @@ function swohModal(e) {
 
 // Función para visualizar los comentarios al hacer click en el botón comments
 function showComments() {
-  let postId = btnComments.getAttribute('name');
+  let postId = btnComments.getAttribute('name', 'name');
   commentModal.innerHTML = '';
   fetch(urlComments)
   .then((response) => response.json())
@@ -114,20 +116,29 @@ function showComments() {
   });
 }
 
+
 // Funcion para borrar posts
+
 function deletePost(){
-  let postId = btnComments.getAttribute('delete');
-  fetch(urlPosts, {
-    method: 'DELETE'
+  let postId = btnComments.getAttribute('name', 'delete');
+  console.log(postId)
+  fetch(`${urlPosts}/${postId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json'
+    },
   })
   .then(response => response.json())
   .then((data) => {
-    if(data.id == postId){
-      containerPost.remove();
-    }
+    cards.remove();
+    
   });
+  setTimeout(function(){ 
+         window.location.reload(true); 
+      }, 1000);
 }
 
-btnDelete.addEventListener("click",deletePost)
+
+
 
 
