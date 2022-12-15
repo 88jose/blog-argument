@@ -12,24 +12,24 @@
     <header>
       <nav class="navbar navbar-expand-lg bg-light">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">Navbar</a>
+          <a class="navbar-brand" href="#">Blog with API</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
+            <!-- <div class="navbar-nav">
               <a class="nav-link active" aria-current="page" href="#">Home</a>
-            </div>
+            </div> -->
           </div>
         </div>
       </nav>
     </header>
       <section class="container-fluid" id="portada">
         <div class="row">
-          <h1 class="col-md-12">Blog with API</h1>
+          <h1 id="titleHeader" class="col-md-12">Blog with API</h1>
         </div>
       </section>
-      <section id="containerPost">       
+      <section class="container" id="containerPost">       
         <div class="row row-cols-1 row-cols-md-4 g-8" id="cards"></div>
       </section>
 
@@ -39,19 +39,14 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel"></h1>
-                    
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                  
-                </div>
+                <div class="modal-body"></div>
                 <div id="userEmail">
-                  <div id="userModal"></div>
-                  <div id="emailModal"></div>
+                  <div><span style="margin-left:20px; font-weight:600; font-size:15px;">Username:</span><span id="userModal"></span></div>
+                  <div><span style="margin-left:20px; font-weight:600; font-size:15px;">Email:</span><span id="emailModal"></span></div>
                 </div>
                 <div class="containerComent">
-                  <!-- <button type="button" class="btn btn-outline-info" id="btnComments" name="name">Comments</button>
-                  <div id="commentModal" name="name"></div> -->
                   <div class="accordion accordion-flush" id="accordionFlushExample">
                     <div class="accordion-item">
                       <h2 class="accordion-header" id="flush-headingOne">
@@ -65,9 +60,26 @@
                     </div>
                   </div>
                 </div>
+                  <!-- Form -->
+                  <form>
+                    <div class="mb-3">
+                      <label for="editTitle" class="form-label">Edit title</label>
+                      <input type="text" class="form-control" id="editTitle" aria-describedby="emailHelp">
+                    </div>
+                    <div class="mb-3">
+                      <label for="editBody" class="form-label">Edit text</label>
+                      <input type="text" class="form-control" id="editBody" name="edition">
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="savePost">Guardar</button>
+                  </form>
+
+
+
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary" name="delete" id="btnDelete">Delete post</button>
+                    <!-- <button type="button" class="btn btn-primary" id="editButton">Edit</button> -->
                 </div>
             </div>
           </div> 

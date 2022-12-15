@@ -5,21 +5,26 @@ let usersModal = document.querySelector('#userModal');
 let emailsModal = document.querySelector('#emailModal');
 let commentModal = document.querySelector('#commentModal');
 let btnComments = document.querySelector('#btnComments');
-let editButton = document.querySelector('#editButton');
 let btnDelete = document.querySelector('#btnDelete');
 let containerPost = document.querySelector('#containerPost');
 let cards = document.querySelector('#cards');
+let postTitleInput = document.querySelector('#editTitle');
+let postBodyInput = document.querySelector('#editBody');
+let savePostBtn = document.querySelector('#savePost');
+
+let idPost;
+let idBodyModal;
+
 
 // Variables URLs
 const urlPosts = "http://localhost:3000/posts";
 const urlUsers = "http://localhost:3000/users";
 const urlComments = "http://localhost:3000/comments";
 
-
 // Escuchador de eventos
 btnComments.addEventListener('click', showComments);
 btnDelete.addEventListener('click',  deletePost);
-
+savePostBtn.addEventListener('click', editPost);
 
 // Funcion para hacer fetch a las urls de manera asincrona, es decir de manera simultanea, una vez obtenidos los datos se llama a las funciones
 async function getData() {
@@ -41,8 +46,9 @@ function cardsPosts(titlesCards) {
   titlesCards.forEach((post) => {
     cards += `<div class= "col">
                     <div class="card">
+                    <img src="assets/img/autum6.jpg" class="card-img-top" alt="...">
                         <div class="card-body">
-                            <h5 class="card-title">${post.title}</h5>
+                            <h5 class="card-title" name="${post.id}">${post.title}</h5>
                             <button onclick="swohModal(event)" type="button" class="btn btn-primary" data-bs-toggle="modal" name="${post.id}" data-bs-target="#exampleModal">View post</button>
                         </div>
                     </div>
@@ -63,11 +69,12 @@ function modalPosts(userEmail) {
       document.querySelector('#emailModal').innerHTML = modalsEmail;
   });
 }
-
-
+// Funcion para obtener los datos de los post y mostrar y crear contenido en el modal
 function swohModal(e) {
-  const element = e.target.name;
-  fetch(`${urlPosts}/${element}`)
+  idPost = e.target.name;
+  
+  console.log(idPost)
+  fetch(`${urlPosts}/${idPost}`)
     .then(function (response2) {
       return response2.json();
     })
@@ -81,16 +88,15 @@ function swohModal(e) {
       return response2.json();
     })
     .then(function (data2) {            
-      usersModal.textContent = " Username: " + data2.username;  
-      emailsModal.textContent =  " Email: "+ data2.email;      
-      return fetch(`${urlComments}${data2.postId}`);
+      usersModal.textContent = data2.username;  
+      emailsModal.textContent = data2.email;      
+      return fetch(`${urlComments}/${data2.postId}`);
     })
     .then(function (response3) {
       return response3.json();
     })
     // para que cuando recargue esté vacío
     .then(function (data3) {
-      // commentModal.textContent = ""; 
       document.getElementById('flush-collapseOne').classList.remove('show');
     })
     .catch(function (error) {
@@ -116,9 +122,34 @@ function showComments() {
   });
 }
 
+// Funcion para editar los posts
+function editPost(e) {
+  e.preventDefault();
+    bodyModal.setAttribute("name", idBodyModal);
+    let postId = titleModal.getAttribute('name', 'edition');
+    let postTitleData = postTitleInput.value;
+    let postBodyData = postBodyInput.value;
+
+    fetch(`${urlPosts}/${postId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            title: postTitleData, 
+            body:postBodyData
+        })
+    }).then(res => res.json())
+    .then(data => {
+        titleModal.textContent = postTitleData;
+        let h5 = document.querySelector(`h5[name="${idPost}"]`);
+        let div = document.querySelector(`div[name="${idBodyModal}"]`);
+        h5.textContent = postTitleData;
+        div.textContent = postBodyData;
+    });
+}
 
 // Funcion para borrar posts
-
 function deletePost(){
   let postId = btnComments.getAttribute('name', 'delete');
   console.log(postId)
@@ -131,14 +162,11 @@ function deletePost(){
   .then(response => response.json())
   .then((data) => {
     cards.remove();
-    
   });
   setTimeout(function(){ 
          window.location.reload(true); 
-      }, 1000);
+      }, 1000); 
 }
-
-
 
 
 
