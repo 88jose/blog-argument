@@ -1,10 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Mukta:wght@200;400;600&display=swap');
+
+
 #titleHeader{
     text-align: center;
     padding: 50px;
+    font-family: 'Mukta', sans-serif;
 }
 .card{
     text-align: center;
     margin: 10px 0;
+    font-family: 'Mukta', sans-serif;
 }
 .card-body{
     min-height: 200px !important;
@@ -12,27 +17,71 @@
     justify-content: space-between;
     align-items: center;
     flex-direction: column;
+    font-family: 'Mukta', sans-serif;
 }
 #emailModal, #userModal{
     padding: 0 10px;
+    font-family: 'Mukta', sans-serif;
 }
 .containerComent{
     padding: 20px;
+    font-family: 'Mukta', sans-serif;
 }
 #commentModal p:first-child{
     padding: 40px 0 0px 0;
+    font-family: 'Mukta', sans-serif;
 }
 
 #commentModal p{
     padding: 5px 0;
+    font-family: 'Mukta', sans-serif;
 }
 
 .accordion-flush .accordion-item:last-child{
     border:2px solid #0d6efd;
+    font-family: 'Mukta', sans-serif;
 }
 .mb-3{
     margin:20px;
 }
 #savePost{
     margin:20px;
+    font-family: 'Mukta', sans-serif;
+}
+
+.btn-close{
+ font-family: 'Mukta', sans-serif;
+}
+
+#userModal  {
+font-family: 'Mukta', sans-serif;
+}
+
+#emailModal {
+    font-family: 'Mukta', sans-serif;
+}
+
+.form-label{
+    font-family: 'Mukta', sans-serif;
+}
+
+.form-control{
+font-family: 'Mukta', sans-serif;
+}
+
+.btn btn-primary{
+font-family: 'Mukta', sans-serif;
+}
+
+.btn btn-secondary{
+font-family: 'Mukta', sans-serif;
+}
+
+.modal-body{
+    font-family: 'Mukta', sans-serif;  
+}
+
+
+button {
+    font-family: 'Mukta', sans-serif;  
 }
