@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Mukta:wght@200;400;600&display=swap');
 
-
 #titleHeader{
     text-align: center;
     padding: 50px;
@@ -49,10 +48,6 @@
     font-family: 'Mukta', sans-serif;
 }
 
-.btn-close{
- font-family: 'Mukta', sans-serif;
-}
-
 #userModal  {
 font-family: 'Mukta', sans-serif;
 }
@@ -69,14 +64,6 @@ font-family: 'Mukta', sans-serif;
 font-family: 'Mukta', sans-serif;
 }
 
-.btn btn-primary{
-font-family: 'Mukta', sans-serif;
-}
-
-.btn btn-secondary{
-font-family: 'Mukta', sans-serif;
-}
-
 .modal-body{
     font-family: 'Mukta', sans-serif;  
 }
@@ -84,4 +71,14 @@ font-family: 'Mukta', sans-serif;
 
 button {
     font-family: 'Mukta', sans-serif;  
+}
+#btnDelete{
+    background-color: white;
+    border: 2px solid red;
+    color:red;
+}
+#btnDelete:hover{
+    background-color: red;
+    border: 2px solid red;
+    color:white;
 }
