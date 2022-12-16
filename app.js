@@ -130,6 +130,9 @@ function editPost(e) {
     let postTitleData = postTitleInput.value;
     let postBodyData = postBodyInput.value;
 
+    // let postTitleData = postTitleInput.value;
+    // let postBodyData = postBodyInput.value;
+
     fetch(`${urlPosts}/${postId}`, {
         method: 'PUT',
         headers: {
