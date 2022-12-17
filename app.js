@@ -1,30 +1,30 @@
 // Variables
-let titleModal = document.querySelector('#exampleModalLabel');
-let bodyModal = document.querySelector('.modal-body');
-let usersModal = document.querySelector('#userModal');
-let emailsModal = document.querySelector('#emailModal');
-let commentModal = document.querySelector('#commentModal');
-let btnComments = document.querySelector('#btnComments');
-let btnDelete = document.querySelector('#btnDelete');
-let containerPost = document.querySelector('#containerPost');
-let cards = document.querySelector('#cards');
-let postTitleInput = document.querySelector('#editTitle');
-let postBodyInput = document.querySelector('#editBody');
-let savePostBtn = document.querySelector('#savePost');
+let titleModal = document.querySelector("#exampleModalLabel");
+let bodyModal = document.querySelector(".modal-body");
+let usersModal = document.querySelector("#userModal");
+let emailsModal = document.querySelector("#emailModal");
+let commentModal = document.querySelector("#commentModal");
+let btnComments = document.querySelector("#btnComments");
+let btnDelete = document.querySelector("#btnDelete");
+let containerPost = document.querySelector("#containerPost");
+let cards = document.querySelector("#cards");
+let postTitleInput = document.querySelector("#editTitle");
+let postBodyInput = document.querySelector("#editBody");
+let savePostBtn = document.querySelector("#savePost");
 
 let idPost;
 let idBodyModal;
-
 
 // Variables URLs
 const urlPosts = "http://localhost:3000/posts";
 const urlUsers = "http://localhost:3000/users";
 const urlComments = "http://localhost:3000/comments";
 
-// Escuchador de eventos
-btnComments.addEventListener('click', showComments);
-btnDelete.addEventListener('click',  deletePost);
-savePostBtn.addEventListener('click', editPost);
+// Eventos
+getData();
+btnComments.addEventListener("click", showComments);
+btnDelete.addEventListener("click", deletePost);
+savePostBtn.addEventListener("click", editPost);
 
 // Funcion para hacer fetch a las urls de manera asincrona, es decir de manera simultanea, una vez obtenidos los datos se llama a las funciones
 async function getData() {
@@ -36,9 +36,7 @@ async function getData() {
 
   cardsPosts(data1);
   modalPosts(data2);
-
 }
-getData();
 
 // Funcion para crear los post del blog
 function cardsPosts(titlesCards) {
@@ -53,7 +51,7 @@ function cardsPosts(titlesCards) {
                         </div>
                     </div>
                 </div>`;
-    document.querySelector('#cards').innerHTML = cards;
+    document.querySelector("#cards").innerHTML = cards;
   });
 }
 
@@ -62,34 +60,35 @@ function modalPosts(userEmail) {
   let modalsUser = "";
   let modalsEmail = "";
   userEmail.forEach((modal) => {
-      modalsUser += `<p class="userModal" name="${modal.userId}">${modal.username}</p>`;
-      modalsEmail +=`<p class="emailModal" name="${modal.userId}">${modal.email}</p>`;
-              
-      document.querySelector('#userModal').innerHTML = modalsUser;
-      document.querySelector('#emailModal').innerHTML = modalsEmail;
+    modalsUser += `<p class="userModal" name="${modal.userId}">${modal.username}</p>`;
+    modalsEmail += `<p class="emailModal" name="${modal.userId}">${modal.email}</p>`;
+
+    document.querySelector("#userModal").innerHTML = modalsUser;
+    document.querySelector("#emailModal").innerHTML = modalsEmail;
   });
 }
+
 // Funcion para obtener los datos de los post y mostrar y crear contenido en el modal
 function swohModal(e) {
   idPost = e.target.name;
-  
-  console.log(idPost)
+
+  console.log(idPost);
   fetch(`${urlPosts}/${idPost}`)
     .then(function (response2) {
       return response2.json();
     })
-    .then(function (data1) { 
+    .then(function (data1) {
       titleModal.textContent = data1.title;
       bodyModal.textContent = data1.body;
-      btnComments.setAttribute('name', data1.id);
+      btnComments.setAttribute("name", data1.id);
       return fetch(`${urlUsers}/${data1.userId}`);
     })
     .then(function (response2) {
       return response2.json();
     })
-    .then(function (data2) {            
-      usersModal.textContent = data2.username;  
-      emailsModal.textContent = data2.email;      
+    .then(function (data2) {
+      usersModal.textContent = data2.username;
+      emailsModal.textContent = data2.email;
       return fetch(`${urlComments}/${data2.postId}`);
     })
     .then(function (response3) {
@@ -97,7 +96,7 @@ function swohModal(e) {
     })
     // para que cuando recargue esté vacío
     .then(function (data3) {
-      document.getElementById('flush-collapseOne').classList.remove('show');
+      document.getElementById("flush-collapseOne").classList.remove("show");
     })
     .catch(function (error) {
       console.log(error);
@@ -106,70 +105,65 @@ function swohModal(e) {
 
 // Función para visualizar los comentarios al hacer click en el botón comments
 function showComments() {
-  let postId = btnComments.getAttribute('name', 'name');
-  commentModal.innerHTML = '';
+  let postId = btnComments.getAttribute("name", "name");
+  commentModal.innerHTML = "";
   fetch(urlComments)
-  .then((response) => response.json())
-  .then((data) => {
-    data.forEach(comment => {
-      // aqui le estoy diciendo que si el postId es igual al postId del botón que me cree un parrafo con el comentario .body 
-      if(comment.postId == postId){
-        let commentElement = document.createElement('p');
-        commentElement.textContent = comment.body;
-        commentModal.appendChild(commentElement);
-      }
+    .then((response) => response.json())
+    .then((data) => {
+      data.forEach((comment) => {
+        // aqui le estoy diciendo que si el postId es igual al postId del botón que me cree un parrafo con el comentario
+        if (comment.postId == postId) {
+          let commentElement = document.createElement("p");
+          commentElement.textContent = comment.body;
+          commentModal.appendChild(commentElement);
+        }
+      });
     });
-  });
 }
 
 // Funcion para editar los posts
 function editPost(e) {
   e.preventDefault();
-    bodyModal.setAttribute("name", idBodyModal);
-    let postId = titleModal.getAttribute('name', 'edition');
-    let postTitleData = postTitleInput.value;
-    let postBodyData = postBodyInput.value;
 
-    // let postTitleData = postTitleInput.value;
-    // let postBodyData = postBodyInput.value;
+  bodyModal.setAttribute("name", idBodyModal);
+  let postId = titleModal.getAttribute("name", "edition");
+  let postTitleData = postTitleInput.value;
+  let postBodyData = postBodyInput.value;
 
-    fetch(`${urlPosts}/${postId}`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            title: postTitleData, 
-            body:postBodyData
-        })
-    }).then(res => res.json())
-    .then(data => {
-        titleModal.textContent = postTitleData;
-        let h5 = document.querySelector(`h5[name="${idPost}"]`);
-        let div = document.querySelector(`div[name="${idBodyModal}"]`);
-        h5.textContent = postTitleData;
-        div.textContent = postBodyData;
+  fetch(`${urlPosts}/${postId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      title: postTitleData,
+      body: postBodyData,
+    }),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      titleModal.textContent = postTitleData;
+      let h5 = document.querySelector(`h5[name="${idPost}"]`);
+      let div = document.querySelector(`div[name="${idBodyModal}"]`);
+      h5.textContent = postTitleData;
+      div.textContent = postBodyData;
     });
 }
 
 // Funcion para borrar posts
-function deletePost(){
-  let postId = btnComments.getAttribute('name', 'delete');
-  console.log(postId)
+function deletePost() {
+  let postId = btnComments.getAttribute("name", "delete");
   fetch(`${urlPosts}/${postId}`, {
-    method: 'DELETE',
+    method: "DELETE",
     headers: {
-      'Content-Type': 'application/json'
+      "Content-Type": "application/json",
     },
   })
-  .then(response => response.json())
-  .then((data) => {
-    cards.remove();
-  });
-  setTimeout(function(){ 
-         window.location.reload(true); 
-      }, 1000); 
+    .then((response) => response.json())
+    .then((data) => {
+      cards.remove();
+    });
+  setTimeout(function () {
+    window.location.reload(true);
+  }, 1000);
 }
-
-
-
