@@ -1,4 +1,3 @@
-// Variables
 let titleModal = document.querySelector("#exampleModalLabel");
 let bodyModal = document.querySelector(".modal-body");
 let usersModal = document.querySelector("#userModal");
@@ -15,18 +14,15 @@ let savePostBtn = document.querySelector("#savePost");
 let idPost;
 let idBodyModal;
 
-// Variables URLs
 const urlPosts = "http://localhost:3000/posts";
 const urlUsers = "http://localhost:3000/users";
 const urlComments = "http://localhost:3000/comments";
 
-// Eventos
 getData();
 btnComments.addEventListener("click", showComments);
 btnDelete.addEventListener("click", deletePost);
 savePostBtn.addEventListener("click", editPost);
 
-// Funcion para hacer fetch a las urls de manera asincrona, es decir de manera simultanea, una vez obtenidos los datos se llama a las funciones
 async function getData() {
   const response1 = await fetch(urlPosts);
   const data1 = await response1.json();
@@ -38,7 +34,6 @@ async function getData() {
   modalPosts(data2);
 }
 
-// Funcion para crear los post del blog
 function cardsPosts(titlesCards) {
   let cards = "";
   titlesCards.forEach((post) => {
@@ -55,7 +50,6 @@ function cardsPosts(titlesCards) {
   });
 }
 
-// Funcion para crear unos parrafos para el username y el email
 function modalPosts(userEmail) {
   let modalsUser = "";
   let modalsEmail = "";
@@ -68,7 +62,6 @@ function modalPosts(userEmail) {
   });
 }
 
-// Funcion para obtener los datos de los post y mostrar y crear contenido en el modal
 function swohModal(e) {
   idPost = e.target.name;
 
@@ -94,7 +87,6 @@ function swohModal(e) {
     .then(function (response3) {
       return response3.json();
     })
-    // para que cuando recargue esté vacío
     .then(function (data3) {
       document.getElementById("flush-collapseOne").classList.remove("show");
     })
@@ -103,7 +95,6 @@ function swohModal(e) {
     });
 }
 
-// Función para visualizar los comentarios al hacer click en el botón comments
 function showComments() {
   let postId = btnComments.getAttribute("name", "name");
   commentModal.innerHTML = "";
@@ -111,7 +102,6 @@ function showComments() {
     .then((response) => response.json())
     .then((data) => {
       data.forEach((comment) => {
-        // aqui le estoy diciendo que si el postId es igual al postId del botón que me cree un parrafo con el comentario
         if (comment.postId == postId) {
           let commentElement = document.createElement("p");
           commentElement.textContent = comment.body;
@@ -121,7 +111,7 @@ function showComments() {
     });
 }
 
-// Funcion para editar los posts
+
 function editPost(e) {
   e.preventDefault();
 
@@ -150,7 +140,6 @@ function editPost(e) {
     });
 }
 
-// Funcion para borrar posts
 function deletePost() {
   let postId = btnComments.getAttribute("name", "delete");
   fetch(`${urlPosts}/${postId}`, {
