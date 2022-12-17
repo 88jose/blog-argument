@@ -64,7 +64,6 @@ function modalPosts(userEmail) {
 
 function swohModal(e) {
   idPost = e.target.name;
-
   console.log(idPost);
   fetch(`${urlPosts}/${idPost}`)
     .then(function (response2) {
@@ -114,7 +113,6 @@ function showComments() {
 
 function editPost(e) {
   e.preventDefault();
-
   bodyModal.setAttribute("name", idBodyModal);
   let postId = titleModal.getAttribute("name", "edition");
   let postTitleData = postTitleInput.value;
